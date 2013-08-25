@@ -14,8 +14,11 @@
  * This class phpsimplemail
  * @link(PHP Simple Mail, https://github.com/eoghanobrien/php-simple-mail)
  */
-class SimpleMail_Library
+class Simplemail_Library
 {
+    /**
+     * Control-Return-Line-Feed used to seperate data in the email.
+     */
     const CRLF = "\r\n";
 
     /**
@@ -74,7 +77,7 @@ class SimpleMail_Library
     /**
      * Resets all variables to initial state.
      *
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function reset()
     {
@@ -101,7 +104,7 @@ class SimpleMail_Library
      * @throws InvalidArgumentException on non string value for $email
      * @throws InvalidArgumentException on non string value for $name
      *
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function setTo($email, $name)
     {
@@ -133,7 +136,7 @@ class SimpleMail_Library
      *
      * @param  string$subject
      * @throws InvalidArgumentException on non string value for $subject
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function setSubject($subject)
     {
@@ -162,7 +165,7 @@ class SimpleMail_Library
      * @access public
      * @param  string $message
      * @throws InvalidArgumentException on non string value for $message
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function setMessage($message)
     {
@@ -192,7 +195,7 @@ class SimpleMail_Library
      * @access public
      * @param  string $path
      * @param  string $filename
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function addAttachment($path, $filename = null)
     {
@@ -209,7 +212,7 @@ class SimpleMail_Library
      *
      * @todo   Test this.
      * @param  string $path
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function addAttachmentPath($path)
     {
@@ -223,7 +226,7 @@ class SimpleMail_Library
      *
      * @todo   Test this.
      * @param  string $filename
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function addAttachmentFilename($filename)
     {
@@ -258,7 +261,7 @@ class SimpleMail_Library
      * @throws InvalidArgumentException on non string value for $email
      * @throws InvalidArgumentException on non string value for $name
      *
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function setFrom($email, $name)
     {
@@ -286,7 +289,7 @@ class SimpleMail_Library
      * @throws InvalidArgumentException on non string value for $email
      * @throws InvalidArgumentException on non string value for $name
      *
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function addMailHeader($header, $email = null, $name = null)
     {
@@ -317,7 +320,7 @@ class SimpleMail_Library
      * @throws InvalidArgumentException on non string value for $header
      * @throws InvalidArgumentException on non string value for $value
      *
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function addGenericHeader($header, $value)
     {
@@ -351,7 +354,7 @@ class SimpleMail_Library
      *
      * @param  string $additionalParameters
      * @throws InvalidArgumentException on non string $additionalParameters
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function setParameters($additionalParameters)
     {
@@ -384,7 +387,7 @@ class SimpleMail_Library
      * @throws InvalidArgumentException on non int value
      * @throws InvalidArgumentException on int less than 1 for $wrap
      *
-     * @return Simple_Mail
+     * @return Simplemail_Library
      */
     public function setWrap($wrap = 78)
     {
@@ -414,7 +417,7 @@ class SimpleMail_Library
      */
     public function hasAttachments()
     {
-        return !empty($this->_attachments);
+        return !!count($this->_attachments);
     }
 
     /**
