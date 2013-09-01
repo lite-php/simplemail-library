@@ -435,7 +435,7 @@ class Simplemail_Library
          */
         $headers  = sprintf('MIME-Version: 1.0%s', self::CRLF);
         $headers .= sprintf('Content-Type: multipart/mixed; boundary="%s"%s%s',$uid,self::CRLF,self::CRLF);
-        //$headers .= sprintf('This is a multi-part message in MIME format.%s',self::CRLF);
+        $headers .= sprintf('This is a multi-part message in MIME format.%s',self::CRLF);
 
         //Html Version
         $headers .= sprintf('--%s%s', $uid, self::CRLF);
@@ -472,15 +472,11 @@ class Simplemail_Library
             throw new RuntimeException('Unable to send, no To address has been set.');
         }
 
-        if ($this->hasAttachments()) {
-            $headers .= self::CRLF . $this->assembleAttachmentHeaders();
-            //die($headers);
-            return mail($to, $this->_subject, "", $headers, $this->_parameters);
-        }
-
-        $message = wordwrap($this->_message, $this->_wrap);
-
-        return mail($to, $this->_subject, $message, $headers, $this->_parameters);
+        /**
+         * Assemble the html message and attachment
+         */
+        $headers .= self::CRLF . $this->assembleAttachmentHeaders();
+        return mail($to, $this->_subject, "", $headers, $this->_parameters);
     }
 
     /**
