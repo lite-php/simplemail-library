@@ -32,6 +32,11 @@ class Simplemail_Library
     protected $_to = array();
 
     /**
+     * @var string $_bcc
+     */
+    protected $_bcc = array();
+
+    /**
      * @var string $_subject
      */
     protected $_subject;
@@ -82,6 +87,7 @@ class Simplemail_Library
     public function reset()
     {
         $this->to                   = array();
+        $this->bcc                  = array();
         $this->_headers             = array();
         $this->_subject             = null;
         $this->_message             = null;
@@ -117,6 +123,32 @@ class Simplemail_Library
         }
 
         $this->to[] = $this->formatHeader($email, $name);
+
+        return $this;
+    }
+
+    /**
+     * setTo.
+     *
+     * @param  string $email
+     * @param  string $name
+     *
+     * @throws InvalidArgumentException on non string value for $email
+     * @throws InvalidArgumentException on non string value for $name
+     *
+     * @return Simplemail_Library
+     */
+    public function setBcc($email, $name)
+    {
+        if (! is_string($email)) {
+            throw new InvalidArgumentException('$email - must be a string');
+        }
+
+        if (! is_string($name)) {
+            throw new InvalidArgumentException('$name - must be a string.');
+        }
+
+        $this->bcc[] = $this->formatHeader($email, $name);
 
         return $this;
     }
@@ -434,6 +466,16 @@ class Simplemail_Library
          * @var string
          */
         $headers  = sprintf('MIME-Version: 1.0%s', self::CRLF);
+
+        /**
+         * Add Bcc to the headers
+         */
+        $bcc      = (is_array($this->bcc) && !empty($this->bcc)) ? join(", ", $this->bcc) : false;
+        if($bcc)
+        {
+            $headers .= "Bcc: " . $bcc;
+        }
+
         $headers .= sprintf('Content-Type: multipart/mixed; boundary="%s"%s%s',$uid,self::CRLF,self::CRLF);
         $headers .= sprintf('This is a multi-part message in MIME format.%s',self::CRLF);
 
