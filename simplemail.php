@@ -473,7 +473,7 @@ class Simplemail_Library
         $bcc      = (is_array($this->bcc) && !empty($this->bcc)) ? join(", ", $this->bcc) : false;
         if($bcc)
         {
-            $headers .= "Bcc: " . $bcc;
+            $headers .= sprintf('Bcc: %s%s', $bcc, self::CRLF);
         }
 
         $headers .= sprintf('Content-Type: multipart/mixed; boundary="%s"%s%s',$uid,self::CRLF,self::CRLF);
